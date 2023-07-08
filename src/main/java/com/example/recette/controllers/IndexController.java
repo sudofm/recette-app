@@ -1,7 +1,5 @@
 package com.example.recette.controllers;
 
-import com.example.recette.repositories.CategoryRepository;
-import com.example.recette.repositories.UnitOfMeasureRepository;
 import com.example.recette.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

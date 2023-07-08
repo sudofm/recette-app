@@ -1,10 +1,9 @@
 package com.example.recette.domain;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,7 +15,7 @@ public class Recipe {
     private String description;
     private Integer prepTime;
     private Integer cookTime;
-    private String servings;
+    private Integer servings;
     private String url;
     private String source;
     @Lob

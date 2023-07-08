@@ -1,9 +1,9 @@
 package com.example.recette.domain;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
