@@ -23,7 +23,7 @@
         <div class="m-2 card">
           <div class="card-header bg-info">
             <!-- /* @thymesVar id="recipe" type="com.example.recette.domain.Recipe" */ -->
-            <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+            <h2 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h2>
           </div>
           <div class="card-body">
             <div class="row">
@@ -70,7 +70,7 @@
                 <h5>Source:</h5>
               </div>
               <div class="col-md-3">
-                <p th:text="${recipe.source} + "></p>
+                <p th:text="${recipe.source}"></p>
               </div>
               <div class="col-md-3">
                 <h5>URL:</h5>
@@ -84,7 +84,7 @@
 
       <div class="m-2 card">
         <div class="card-header bg-info">
-          <h1 class="card-title" >Ingredients</h1>
+          <h2 class="card-title" >Ingredients</h2>
         </div>
         <div class="card-body">
           <div class="row">
@@ -102,7 +102,7 @@
 
       <div class="m-2 card">
         <div class="card-header bg-info">
-          <h1 class="card-title">Directions</h1>
+          <h2 class="card-title">Directions</h2>
         </div>
         <div class="card-body">
           <div class="row">
@@ -115,7 +115,7 @@
 
       <div class="m-2 card">
         <div class="card-header bg-info">
-          <h1 class="card-title">Notes</h1>
+          <h2 class="card-title">Notes</h2>
         </div>
         <div class="card-body">
           <div class="row">
