@@ -37,6 +37,7 @@
                                 <th scope="col">Description</th>
                                 <th scope="col">Consulter</th>
                                 <th scope="col">Modifier</th>
+                                <th scope="col">Supprimer</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,6 +58,9 @@
                                 </td>
                                 <td>
                                     <a href="#" th:href="@{'/recipe/'+ ${recipe.id} +'/update'}">Modifier</a>
+                                </td>
+                                <td>
+                                    <a href="#" th:href="@{'/recipe/'+ ${recipe.id} +'/delete'}">Supprimer</a>
                                 </td>
                             </tr>
                             </tbody>
