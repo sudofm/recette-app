@@ -2,7 +2,6 @@ package com.example.recette.services;
 
 import com.example.recette.command.RecipeCommand;
 import com.example.recette.domain.Recipe;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
