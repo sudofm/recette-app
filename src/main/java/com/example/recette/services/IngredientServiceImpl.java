@@ -73,13 +73,13 @@ public class IngredientServiceImpl implements IngredientService {
 
             if (ingredientOptional.isPresent()) {
                 Ingredient ingredientFound = ingredientOptional.get();
+                System.out.println(command.getDescription());
                 ingredientFound.setDescription(command.getDescription());
                 System.out.println(command.getAmount());
                 ingredientFound.setAmount(command.getAmount());
                 System.out.println(command.getUnitOfMeasure());
-               // ingredientFound.setUnitOfMeasure(unitOfMeasureRepository
-                 //       .findById(command.getUnitOfMeasure().getId())
-                   //     .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));  //todo address this
+                ingredientFound.setUnitOfMeasure(unitOfMeasureRepository.findById(command.getUnitOfMeasure().getId())
+                        .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));  //todo address this
             } else {
                 recipe.addIngredient(ingredientCommandToIngredient.convert(command));
             }
@@ -89,7 +89,42 @@ public class IngredientServiceImpl implements IngredientService {
                     .filter(recipeIngredient -> recipeIngredient.getId().equals(command.getId()))
                     .findFirst();
 
+            if(!savedIngredientOptional.isPresent()){
+                //not totally safe... But best guess
+                savedIngredientOptional = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
+                        .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
+                        .filter(recipeIngredients -> recipeIngredients.getUnitOfMeasure().getId().equals(command.getUnitOfMeasure().getId()))
+                        .findFirst();
+            }
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
+    }
+
+    @Override
+    public void deleteById(Long recipeId, Long ingredientId) {
+        log.debug("Deleting ingredient: " + recipeId + ":" + ingredientId);
+       Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+
+       if (recipeOptional.isPresent()) {
+           Recipe recipe = recipeOptional.get();
+           log.debug("found recipe");
+
+           Optional<Ingredient> ingredientOptional = recipe.getIngredients()
+                   .stream()
+                   .filter( ingredient -> ingredient.getId().equals(ingredientId))
+                   .findFirst();
+
+           if (ingredientOptional.isPresent()) {
+               log.debug("found ingredient");
+               Ingredient ingredientToDelete = ingredientOptional.get();
+               ingredientToDelete.setRecipe(null);
+               recipe.getIngredients().remove(ingredientOptional.get());
+               recipeRepository.save(recipe);
+           }
+       } else {
+           log.debug("Recipe Id not found Id :" + recipeId);
+       }
+
     }
 }
