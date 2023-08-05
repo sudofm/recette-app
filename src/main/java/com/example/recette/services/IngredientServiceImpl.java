@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -58,7 +59,7 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
-        if (!recipeOptional.isPresent()) {
+        if (recipeOptional.isEmpty()) {
             //todo toss error if not found!
             log.error("Recipe not found for id: " + command.getRecipeId());
             return new IngredientCommand();
@@ -81,7 +82,7 @@ public class IngredientServiceImpl implements IngredientService {
                 ingredientFound.setUnitOfMeasure(unitOfMeasureRepository.findById(command.getUnitOfMeasure().getId())
                         .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));  //todo address this
             } else {
-                recipe.addIngredient(ingredientCommandToIngredient.convert(command));
+                recipe.addIngredient(Objects.requireNonNull(ingredientCommandToIngredient.convert(command)));
             }
             Recipe savedRecipe = recipeRepository.save(recipe);
 
@@ -89,7 +90,7 @@ public class IngredientServiceImpl implements IngredientService {
                     .filter(recipeIngredient -> recipeIngredient.getId().equals(command.getId()))
                     .findFirst();
 
-            if(!savedIngredientOptional.isPresent()){
+            if(savedIngredientOptional.isEmpty()){
                 //not totally safe... But best guess
                 savedIngredientOptional = savedRecipe.getIngredients().stream()
                         .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
