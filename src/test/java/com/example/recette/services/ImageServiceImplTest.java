@@ -1,5 +1,6 @@
 package com.example.recette.services;
 
+import com.example.recette.command.RecipeCommand;
 import com.example.recette.domain.Recipe;
 import com.example.recette.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -22,6 +25,7 @@ class ImageServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    RecipeService recipeService;
     ImageService imageService;
 
     @BeforeEach
@@ -41,7 +45,7 @@ class ImageServiceImplTest {
         recipe.setId(id);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
 
         ArgumentCaptor<Recipe> argumentCaptor = ArgumentCaptor.forClass(Recipe.class);
 
@@ -53,4 +57,6 @@ class ImageServiceImplTest {
         Recipe savedRecipe = argumentCaptor.getValue();
         assertEquals(multipartFile.getBytes().length, savedRecipe.getImages().length );
     }
+
+
 }
