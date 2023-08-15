@@ -1,6 +1,5 @@
 package com.example.recette.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +27,7 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
     @Lob
-    private byte[] images;
+    private Byte[] images;
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
     @ManyToMany

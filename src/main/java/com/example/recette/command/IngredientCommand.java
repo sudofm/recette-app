@@ -1,6 +1,5 @@
 package com.example.recette.command;
 
-import com.example.recette.domain.Recipe;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

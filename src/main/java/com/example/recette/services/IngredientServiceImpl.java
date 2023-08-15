@@ -36,7 +36,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long IngredientId) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
-        if (!recipeOptional.isPresent()) {
+        if (recipeOptional.isEmpty()) {
             //TODO : impl error handling
             log.debug("Recipe not found");
         }
@@ -44,9 +44,9 @@ public class IngredientServiceImpl implements IngredientService {
         Recipe recipe = recipeOptional.get();
         Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
                 .filter(ingredient -> ingredient.getId().equals(IngredientId))
-                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
+                .map(ingredientToIngredientCommand::convert).findFirst();
 
-        if (!ingredientCommandOptional.isPresent()) {
+        if (ingredientCommandOptional.isEmpty()) {
             //TODO : impl error handling
             log.debug("Ingredient not found");
         }

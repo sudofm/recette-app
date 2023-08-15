@@ -1,7 +1,6 @@
 package com.example.recette.controllers;
 
 import com.example.recette.command.RecipeCommand;
-import com.example.recette.domain.Recipe;
 import com.example.recette.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/{id}/delete")
-    public String deleteById(@PathVariable String id, Model model) {
+    public String deleteById(@PathVariable String id) {
         log.debug("Deleting id :" + id);
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
